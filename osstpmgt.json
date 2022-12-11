@@ -1,0 +1,510 @@
+{
+    "allow_delete": false,
+    "allow_delete_doc": "Override this field to enable/disable delete api for Product, Release, MasterTicket, UseTicket and DependencyPruningTicke. Usage: DELETE /api/v1/<resource_name>/<id>, e.g. DELETE /api/v1/masterticket/1234",
+
+    "allowed_hosts": ["osm.eng.vmware.com", "%(server_name)s", "localhost"],
+    "allowed_hosts_doc": "A list of the hostnames which are served by the OSS/TP application.  For the production server this includes the offical server name '``osstp.vmware.com``'.",
+
+    "auto_merge_fields": ["status", "resolution", "osl_inclusion", "odp_inclusion",
+                          "copyright_notices", "eulap", "compliance_terms", "osl_notes",
+                          "non_std_provisions", "modified", "pm_compterms_validation",
+                          "dev_compterms_validation", "license", "interaction_type",
+                          "feature_subset", "subpackages", "ct"],
+    "auto_merge_fields_doc": "A list of fields which will be auto merged",
+
+    "auto_merge_check_fields": ["status", "resolution", "osl_inclusion", "odp_inclusion",
+                                "copyright_notices", "eulap", "compliance_terms", "osl_notes",
+                                "non_std_provisions", "modified", "pm_compterms_validation",
+                                "dev_compterms_validation", "license", "interaction_type",
+                                "feature_subset", "subpackages", "ct"],
+    "auto_merge_check_fields_doc": "If any field in this list of the ancestor package has diverged, the auto merge will be skipped on the ancestor package",
+
+    "ct_confirm_fields": ["dev_compterms_validation", "pm_compterms_validation"],
+    "ct_confirm_fields_doc": "ct confirmation related fields which need to be handled specially in the auto merge",
+
+    "backup_dir": "%(base_dir)s/backup",
+    "backup_dir_doc": "The directory where database backups are stored.  This is normally an NFS volume managed by TechOps.",
+
+    "beta_dump": "%(jenkins_server)s/jenkins/job/scotzilla-beta-update/ws/scotzilla.dmp",
+    "beta_dump_doc": "The URL for the database backup from the beta server.",
+
+    "clearly_defined_host": "https://api.clearlydefined.io",
+    "clearly_defined_host_doc": "The host url of clearlDefinedd server",
+
+    "blackduck_hub_server": "https://ins01-blackduck-webserver-exposed-vela-oss-scanning.vela.decc.vmware.com",
+    "blackduck_hub_server_doc": "A stand alone Hub server from Scanning cluster which is userd to present component information in Hub",
+
+    "blackduck_hub_username": "sysadmin",
+    "blackduck_hub_username_doc": "user name to access Hub instance %(blackduck_hub_server)s",
+
+    "blackduck_hub_password": "blackduck",
+    "blackduck_hub_password_doc": "password for %(blackduck_hub_username)s",
+
+    "blackduck_hub_client_url": "%(blackduck_hub_server)s/download/scan.cli.zip",
+    "blackduck_hub_client_dir_name": "hub_client",
+    "blackduck_hub_client_dir": "%(base_dir)s/%(blackduck_hub_client_dir_name)s/",
+    "blackduck_hub_client": "%(blackduck_hub_client_dir)s/bin/scan.cli.sh",
+
+    "banned_suffix_for_auto_download": ["html", "pom", "xml", "txt"],
+    "banned_suffix_for_auto_download_doc": "Don't download the source for this kind of url automatically in packages.tasks_master.download_task",
+
+    "hub_client_scan_polling_interval": 10,
+    "hub_client_scan_polling_interval_doc": "the return value is polled every %(hub_client_scan_polling_interval)s seconds when the scan is executed in a hub client process",
+
+    "hub_client_scan_time_out": 1200,
+    "hub_client_scan_time_out_doc": "the scan will be deemed as time out if it doesn't finish in %(hub_client_scan_time_out)s seconds in the hub client scanning",
+
+    "hub_max_scan_num": 5,
+    "hub_max_scan_num_doc": "the limit number for triggering scan task to avoid Hub server performance issue",
+
+    "hub_server_scan_polling_interval": 10,
+    "hub_server_scan_polling_interval_doc": "the scan status is polled every %(hub_server_scan_polling_interval)s seconds when the scan is executed in the hub server",
+
+    "hub_server_scan_time_out": 3600,
+    "hub_server_scan_time_out_doc": "the scan will be deemed as time out if it doesn't finish in %(hub_server_scan_time_out)s seconds in the hub server scanning",
+
+    "hub_lib_log_level": "INFO",
+    "hub_lib_log_level_doc": "the log level of blackduckhub library",
+
+    "hub_match_base_score": 80,
+    "hub_match_base_score_doc": "We only trust the component mapping whose confidence percentage is above the threshold in hub",
+
+    "bugzilla_server": "beta",
+    "bugzilla_server_doc": "The Bugzilla server to use when creating tracking PR's.  This parameter should have a value of either 'beta' or 'production'.",
+
+    "celeryd_enabled": true,
+    "celeryd_enabled_doc": "Is the server configured to run the Celery job manager.",
+
+    "celerybeat_enabled": true,
+    "celerybeat_enabled_doc": "Is the server configured to run the Celery beat job scheduler.",
+
+    "celery_broker_url": "amqp://guest:guest@localhost:5672//",
+    "celery_broker_url_doc": "Celery broker url(s)",
+
+    "celery_always_eager": true,
+    "celery_always_eager_doc": "whether tasks will be executed locally instead of being sent to the queue. You can set this to 'true' for debuging and testing",
+
+    "celery_ping_timeout": 2,
+    "celery_ping_timeout_doc": "Timeout setting for Celery workers to reply to the 'ping' check",
+
+    "celery_failure_notify_interval": 900,
+    "celery_failure_notify_interval_doc": "Schedule interval to notify celery task failures",
+
+    "celery_confirm_publish": true,
+    "celery_confirm_publish_doc": "Whether to enable confirmation for publishers (works for pyamqp only which is used by kombu)",
+
+    "celery_publish_timeout": 4,
+    "celery_publish_timeout_doc": "Timeout setting for Celery to publish the msg to the broker",
+
+    "celery_publish_max_retries": 1,
+    "celery_publish_max_retries_doc": "(Due to a bug in 'kombu', the actual 'max_retries' will be 2)the max retries for Celery to publish the msg to the broker",
+
+    "celery_broker_connection_max_retries": 2,
+    "celery_broker_connection_max_retries_doc": "the max retries for Celery to establish the connection to the broker",
+
+    "control_file": "%(webapps_dir)s/osstpmgt.json",
+    "control_file_doc": "The name of the file used to track the current status of a system upgrade (the last task exected, etc).",
+
+    "dbbackup_download": "%(base_dir)s/../scotzilla.dmp",
+    "dbbackup_download_doc": "If a database is downloaded by the 'dev.resetdb' task, it is saved to this location.",
+
+    "dbhost": "10.79.128.30",
+    "dbhost_doc": "The host name for the OSS/TP PostgreSQL database server.",
+
+    "dbname": "scotzilla",
+    "dbname_doc": "The name of the OSS/TP database on the 'dbhost' server.",
+
+    "dbport": "5432",
+    "dbport_doc": "The db connection port of 'dbhost' server.",
+
+    "dbpass": "scotzilla",
+    "dbpass_doc": "Database password for the OSS/TP database user (``dbuser``).",
+
+    "dbuser": "scotzilla",
+    "dbuser_doc": "The PostgreSQL database OSS/TP user.",
+
+    "health_db_statement_timeout": 3000,
+    "health_db_statement_timeout_doc": "the 'statement_timeout' in milliseconds used in the db health check",
+
+    "health_db_stop_after_delay": 7,
+    "health_db_stop_after_delay_doc": "the delay in seconds which the retrying will stop after in the db health check",
+
+    "health_db_stop_after_attempt": 2,
+    "health_db_stop_after_attempt_doc": "the attempts which the retrying will stop after in the db health check",
+
+    "health_db_wait": 1,
+    "health_db_wait_doc": "the time to wait before each retrying in the db health check",
+
+    "health_db_table_name": "legal_rule",
+    "health_db_table_name_doc": "the name of the table used in the db health check",
+
+    "deployment_env": "develop",
+    "deployment_env_doc": "which environment the website are deployed to, options are 'prod', 'beta', 'develop'",
+
+    "decc_heartbeat_interval": 240,
+    "decc_heartbeat_interval_doc": "interval seconds for process to send heartbeat to keep self alive in DECC environment",
+
+    "decc_heartbeat_check_interval": 30,
+    "decc_heartbeat_check_interval_doc": "interval seconds for process to check if reaching decc_heartbeat_interval in DECC environment",
+
+    "dropdb": false,
+    "dropdb_doc": "When resetting a development DB should the BD dropped and recreated or nuked",
+    "conn_max_age": 600,
+    "conn_max_age_doc": "the time to keep db conn alive, 0 means close conn at the end of each request, None for unlimited persistent conn",
+
+    "stats_db_enable": true,
+    "stats_db_enable_doc": "enable/disable OSM stats database, this is used for grafana to pick up data points ",
+
+    "stats_db_name": "scotzilla",
+    "stats_db_name_doc": "OSM stats database name",
+
+    "stats_db_user": "scotzilla",
+    "stats_db_user_doc": "OSM stats database access user",
+
+    "stats_db_password": "scotzilla",
+    "stats_db_password_doc": "OSM stats database access password",
+
+    "stats_db_host": "10.79.128.30",
+    "stats_db_host_doc": "OSM stats database host, currently set to a test location",
+
+    "stats_db_port": "5432",
+    "stats_db_port_doc": "OSM stats database port, default is 5432",
+
+    "session_cookie_age": 1800,
+    "session_cookie_age_doc": "The age of django login session, unit: second",
+
+    "debug": true,
+    "debug_doc": "Enable or disable Django debugging.",
+
+    "debug_toolbar": false,
+    "debug_toolbar_doc": "Enable debug toolbar, only available in debug mode",
+
+    "develop_dump": "%(jenkins_server)s/jenkins/job/scotzilla-develop-update/ws/scotzilla.dmp",
+    "develop_dump_doc": "URL to the development database backup.",
+
+    "email_max_entries": 100,
+    "email_max_entries_doc": "max entries squashed in one email",
+
+    "enable_bugzilla": false,
+    "enable_bugzilla_doc": "Enable MySQL level access to the Bugzilla read-only database (used to sync PCC values).",
+
+    "enable_cached_paginator": false,
+    "enable_cached_paginator_doc": "Enable the CachedCountPaginator for UT&MT list API",
+
+    "es_host": "localhost",
+    "es_index": "osstp-dev",
+    "es_timeout": 20,
+
+    "encrypted_fields_keydir": "%(base_dir)s/fieldkeys",
+    "encrypted_fields_keydir_doc": "Directory to store the keys for database encrypted columns.",
+
+    "forbidden_extensions_in_source_url": [".jar", ".gz", ".rpm", ".tar", ".bz2", ".lzma", ".xz", ".tgz", ".zip", ".gem"],
+    "health_check_dependencies": [],
+
+    "health_check_dependencies_config":
+        {
+            "database": {
+                "impact": "high",
+                "requisite": "mandatory"
+            },
+            "rabbitmq": {
+                "impact": "medium",
+                "requisite": "mandatory"
+            }
+        }
+    ,
+    "health_check_dependencies_doc": "List of dependent CPE services by name.  The name needs to be registered with the CPE health services database",
+
+    "health_check_name": "RDOSS.HAPROXY.NODE",
+    "health_check_name_doc": "Name of the node within the CPE dependency graph",
+
+    "jenkins_server": "https://jenkins7.svc.eng.vmware.com",
+    "jenkins_server_doc": "URL to the R&D Tools Jenkins server.",
+
+    "loglevel": "DEBUG",
+    "loglevel_doc": "The Python logging level, DEBUG, INFO, etc.",
+
+    "manage_py": "%(webapps_dir)s/manage.py",
+    "manage_py_doc": "Path to the Django manage.py script.",
+
+    "old_package_days": 1095,
+    "old_package_days_doc": "How many days old package will be defined as old package",
+
+    "osstp_root_dir": "/var/scotzilla",
+    "osstp_root_dir_doc": "Top level directory where the OSS/TP application is installed on production servers.",
+
+    "pgpassfile_template": "*:*:%(dbname)s:%(dbuser)s:%(dbpass)s\n*:*:postgres:%(dbuser)s:%(dbpass)s\n*:*:template:%(dbuser)s:%(dbpass)s\n",
+    "pgpassfile_template_doc": "The PostgreSQL PGPASSFILE contents.",
+
+    "prod_dump": "%(jenkins_server)s/job/OSSTP/job/osstp-dbbackup/ws/scotzilla.dmp",
+    "prod_dump_doc": "URL to the production database backup.",
+
+    "production_servers": ["%(server_name)s"],
+    "production_servers_doc": "List of production servers used when deploying updated OSS/TP files.",
+
+    "profileviz": true,
+    "profileviz_doc": "Enable the CPU profiler reporting tool - ProfileViz.",
+
+    "piwik_site_id": 0,
+    "piwik_site_id_doc": "Site ID for Piwik reporting, 0 is not a valid site ID and reporting (for dev systems using this default) will be ignored",
+
+    "piwik_url": "//vm-piwik.eng.vmware.com/",
+    "piwik_url_doc": "The end-point for Piwik reporting.  This is does not include the protocol, http/https, as this is supplied by the Piwik library",
+
+    "prevent_duplicate_switch": true,
+    "prevent_duplicate_switch_doc": "A temporary switch to close check for duplicate pacakge waiting for frontend submission",
+    "bossd_server": "https://bossd-api.esp.eng.vmware.com",
+    "bossd_user": "osstp-api",
+    "bossd_apikey": "cab6e04ebba9d0ead609c5212140102e59ae7d1b",
+
+    "bossd_max_retries": 3,
+    "bossd_max_retries_doc": "max retries for requests to BOSS Director",
+
+    "bossd_timeout": 10,
+    "bossd_timeout_doc": "timeout setting for requests to BOSS Director",
+
+    "bossd_ssl_verify": true,
+    "bossd_ssl_verify_doc": "whether verify the SSL certificate of BOSS Director",
+
+    "root_url": "https://%(server_name)s",
+    "root_url_doc": "The root URL for the site, embedded in URL in the site.",
+
+    "uc_root_url": "https://%(server_name)s",
+    "uc_root_url_doc": "The root URL for the upstream contrib site, embedded in URL in the site.",
+
+    "server_email": "noreply@vmware.com",
+    "server_email_doc": "The email address that error messages come from, default is 'root@localhost'. Our email server rejects emails from 'root@localhost', so we need to override this field",
+
+    "server_name": "10.79.128.30",
+    "server_name_doc": "The name of the host serving the OSS/TP application",
+
+    "skip_tasks": ["dbbackup", "webbackup", "git_pull"],
+    "skip_tasks_doc": "List of Fabric tasks that should be skipped, the e.g., the 'test' tasks is skipped on the production server.",
+
+    "sync_vulnerabilities_green_thread_count": 30,
+    "sync_vulnerabilities_green_thread_count_doc": "Count of the green-thread in pool when syncing vulnerabilityies",
+
+    "scanning_cluster_router_addr": "https://osspi-router.eng.vmware.com",
+    "scanning_cluster_router_addr_doc": "The address of scanning cluster router",
+
+    "sbom_max_depth": 3,
+    "sbom_max_depth_doc": "The depth of SBOM generated, for more detail see the doc of class SBomGenerator",
+
+    "osm_scan_label": "osm-stage",
+    "osm_scan_label_doc": "The label used to lease hub server when doing scan",
+
+    "task_sequence": ["start", "shutdown", "dbbackup", "webbackup",
+                      "clean", "git_pull", "update_local_deps", "migrate",
+                      "build", "deploy", "update_remote_deps",
+                      "addbanner", "restart", "test"],
+    "task_sequence_doc": "The list of Fabric tasks in the order in which they should be executed.",
+
+    "tastypie_allow_missing_slash": true,
+    "tastypie_allow_missing_slash_doc": "tastypie setting to allow missing trail slash",
+
+    "tastypie_full_debug": false,
+    "tastypie_full_debug_doc": "Get the full traceback in your console when developing",
+
+    "throttle_at": 1,
+    "throttle_timeframe": 60,
+    "throttle_doc": "The number of requests allowed on an identical API in a specific time window for single user",
+
+    "tld_control_dirs": ["bin", "etc", "pylib", "webapps", "fabfile.py", "lib", "%(blackduck_hub_client_dir_name)s"],
+    "tld_control_dirs_doc": "The list of top level control directory that should rsync'ed to the production servers from a build environment.",
+
+    "toolbar_debug": true,
+    "toolbar_debug_doc": "Whether to show Django debug toolbar.",
+
+    "upload_stage": "%(upload_storage)s/.stage",
+    "upload_stage_doc": "Location where uploaded files are staged prior to being extracted into package specific directories.",
+
+    "upload_storage": "%(osstp_root_dir)s/mnt/src",
+    "upload_storage_doc": "Location where sources, etc., are stored for packages.",
+
+    "attachment_storage": "%(osstp_root_dir)s/mnt/src/attachments",
+    "attachment_storage_doc": "Location where attachments are stored.",
+
+    "ort_scanning_server": "https://rdoss-ort.ara.decc.vmware.com/",
+    "ort_scanning_server_doc": "The host of ORT scanning service",
+
+    "ort_license_base_score": 80.0,
+    "ort_license_base_score_doc": "We only trust the licenses whose matching score is above 80.0 in ORT",
+
+    "osl_storage": "%(upload_storage)s/osl",
+    "osl_storage_doc": "Location for osl files are stored.",
+
+    "osl_trial_storage": "%(upload_storage)s/osl_trial",
+    "osl_trial_storage_doc": "Location for osl trial files are stored.",
+
+    "osl_script": "%(base_dir)s/bin/gen-osl-file-osstp.pl",
+    "osl_script_doc": "File path of the script for the generation of osl",
+
+    "osl_newline": "\r\n",
+    "osl_newline_doc": "use the DOS line ending for the OSL file",
+
+    "osm_home_url": "https://osm.eng.vmware.com",
+    "osm_home_url_doc": "The official root url of OSM",
+
+    "oss_kb_server": "https://osskb-stage.eng.vmware.com",
+    "oss_kb_server_doc": "A stand alone OSS_KB server to fetch package version and vulnerability information",
+
+    "oss_kb_version_threshold": "7.0",
+    "oss_kb_version_threshold_doc": "default value of vulnerability score threshold when fetching newer versions from oss_kb, versions with vulnerability above the threshold will be hidden",
+
+    "osstpmgt_password": "placeholder",
+    "osstpmgt_password_doc": "password for service account osstpmgt@vmware.com",
+
+    "upload_odp_stage": "%(upload_odp_storage)s/.stage",
+    "upload_odp_stage_doc": "Location where uploaded odp-related files are staged prior to being extracted into package specific directories.",
+
+    "upload_odp_storage": "%(upload_storage)s/odp",
+    "upload_odp_storage_doc": "Location where odp-related sources, etc., are stored for packages.",
+
+    "url_schemes": ["http", "https", "ftp", "ftps", "git", "file"],
+    "url_schemes_doc": "Valid url schemes for 'download_url' field in packages",
+
+    "update_es_search": false,
+    "update_es_search_doc": "Whether to enable update_es task",
+
+    "odpverify_xsd_dir": "%(osstp_root_dir)s/webapps/odp_automation/odpverify/xsd",
+    "odpverify_xsd_dir_doc": "Location where odpverify-related xsd files are stored",
+
+    "odpverify_template_dir": "%(osstp_root_dir)s/webapps/odp_automation/odpverify/gentxt",
+    "odpverify_template_dir_doc": "Location where odpverify-related template files are stored",
+
+    "vp_exclude_title": ["Executive Assistant to VP Marketing",
+                         "VP Support",
+                         "Executive Assistant - VP Marketing APAC",
+                         "Senior Executive Assistant to GM & VP",
+                         "Executive Assistant to SVP/GM",
+                         "Sr. Executive Assistant to SVP & CIO",
+                         "Sr. Executive Assistant to Corporate SVP & Chief People Officer",
+                         "Senior Executive Assistant to SVP",
+                         "Sr. Executive Assistant to SVP & General Counsel",
+                         "Sr. Executive Assistant to EVP & Chief Technology Officer",
+                         "Sr. Executive Assistant to EVP & CFO"
+                         ],
+    "vp_exclude_title_doc": "Some titles should be excluded when getting VP user",
+
+    "vp_exception_list": ["ashiv@vmware.com", "mijzerman@vmware.com", "kboyde@vmware.com"],
+    "vp_exception_list_doc": "List of users that may act as a substitute for a VP when providing risk acceptance",
+
+    "webapps_dir": "%(base_dir)s/webapps",
+    "webapps_dir_doc": "Path to the Django webapps directory.",
+
+    "www_dir": "%(base_dir)s/www",
+    "www_dir_doc": "Path to the Perl www directory.",
+
+    "xmlrpc_url": "https://localhost/xmlrpc/",
+    "xmlrpc_url_doc": "XMLRPC url when call from inside application.",
+    "throttle_at": 1,
+    "throttle_timeframe": 60,
+
+    "gh_app_client_id": "db7bc5fdceeed75ec064",
+    "gh_app_client_id_doc": "the client id of the GitHub OAuth app 'osm-gh-test-app' for the GitHub user 'svcosmghtest'",
+
+    "gh_app_client_id_osm": "db7bc5fdceeed75ec064",
+    "gh_app_client_id_osm_doc": "the client id of the GitHub OAuth app for osm.eng.vmware.com",
+
+    "gh_app_client_secret": "a01d709944ac960acebbeb05fe75160f19579098",
+    "gh_app_client_secret_doc": "the client secret of the GitHub OAuth app 'osm-gh-test-app' for the GitHub user 'svcosmghtest'",
+
+    "gh_app_client_secret_osm": "a01d709944ac960acebbeb05fe75160f19579098",
+    "gh_app_client_secret_osm_doc": "the client secret of the GitHub OAuth app for osm.eng.vmware.com",
+
+    "gh_user_oauth_token": "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",
+    "gh_user_oauth_token_doc": "the OAuth token for the GitHub user 'svcosmghtest'",
+
+    "gh_retry_stop_after_delay": 60,
+    "gh_retry_stop_after_delay_doc": "the max seconds to delay since the first retrying starts for GitHub API",
+
+    "gh_retry_stop_after_attempt": 3,
+    "gh_retry_stop_after_attempt_doc": "the max attempts to retry since the first retrying starts for GitHub API",
+
+    "gh_wait_multiplier": 2,
+    "gh_wait_multiplier_doc": "the multiplier used to calculate the exponential wait time for GitHub API",
+
+    "gh_wait_min": 1,
+    "gh_wait_min_doc": "the min seconds to wait before retrying the GitHub API",
+
+    "gh_wait_max": 10,
+    "gh_wait_max_doc": "the max seconds to wait before retrying the GitHub API",
+
+    "gh_temp_admin_expire_hours": 24,
+    "gh_temp_admin_expire_hours_doc": "the temp admin in GitHub will expire after 24 hours",
+
+    "gh_service_account_logins": ["vmwghbot", "vmwclabot", "svcosmghtest"],
+    "gh_service_account_logins_doc": "the GitHub logins for service accounts",
+
+    "gh_remove_unmapped_member_time": 30,
+    "gh_remove_unmapped_member_time_doc": "the time (days) after sending warning email to remove unmapped member",
+
+    "gh_day_to_report_unmapped_member_to_org_owner": 4,
+    "gh_day_to_report_unmapped_member_to_org_owner_doc": "the day to report unmapped member (4 means Friday)",
+
+    "cla_host_scheme": "http",
+    "cla_host_scheme_doc": "the scheme of the CLA portal host",
+
+    "cla_host": "localhost",
+    "cla_host_doc": "the CLA portal host",
+
+    "cla_access_salt": "changeme",
+    "cla_access_salt_doc": "the salt to access the CLA portal",
+
+    "cla_skip_config" : true,
+    "cla_skip_config_doc" : "whether skip the taks which configs the cla in CLA portal",
+
+    "sync_repo_task_count_down": 1800,
+    "sync_repo_task_count_down_doc": "the count down seconds to wait for another sync repo task to be sent",
+
+    "ecms_password": "",
+    "ecms_password_doc": "the password of ecms, which will be replaced by the production settings",
+    "ecms_token": "",
+    "ecms_token_doc": "the token of ecms, which will be replaced by the production settings",
+
+    "cerberus_token": "",
+    "cerberus_token_doc": "the token of cerberus, which will be replaced by the production settings",
+
+    "idp_metadata": "https://myvmware-stg.workspaceair.com/SAAS/API/1.0/GET/metadata/idp.xml",
+    "idp_metadata_doc": "remote metadata link for the IDP",
+
+    "sso_key": "",
+    "sso_key_doc": "SSO private key",
+
+    "sso_cert": "",
+    "sso_cert_doc": "SSO public key",
+
+    "sso_enabled": false,
+    "sso_enabled_doc": "Is the server integrated with SSO",
+
+    "secondary_ordering_blacklist": [
+        "master_ticket__name",
+        "-master_ticket__name",
+        "-master_ticket__version",
+        "master_ticket__version",
+        "release__product__name",
+        "-release__product__name",
+        "release__name",
+        "-release__name"
+    ],
+    "secondary_ordering_blacklist_doc": "This list include the fields that should not have a secondary ordering, more detail in class: ApplySecondarySortingMixin",
+
+    "uc_core_reviewers": ["dstefka@vmware.com", "rzheleva@vmware.com", "gpodolinski@vmware.com",
+                          "ambiels@vmware.com", "fmanning@vmware.com", "gottryj@vmware.com"],
+    "uc_core_reviewers_doc": "the members who can review Upstream Contrib ticket",
+
+    "part_of_powerusers": ["normans@vmware.com","abasaing@vmware.com", "markpeek@vmware.com", "dvhart@vmware.com",
+                    "tpepper@vmware.com", "hinderlitert@vmware.com", "jbeda@vmware.com", "scotzilla@vmware.com", "jchilders@vmware.com"],
+    "part_of_powerusers_doc": "part of the powerful members",
+
+    "part_of_contribmembers": ["tpepper@vmware.com", "jchilders@vmware.com", "fosterd@vmware.com", "mshida@vmware.com"],
+    "part_of_contribmembers_doc": "part of the members work in contrib",
+    "ospo_header": "jchilders@vmware.com",
+    "golang_package_regex": "^((?!-)[A-Za-z\\d-]{0,62}[A-Za-z\\d]\\.)+[A-Za-z]+(\\/\\S+)*$",
+    "cla_licenses": [
+        "Apache2.0",
+        "GPL3.0",
+        "LGPL3.0"
+    ],
+    "redirect_download_size": 10485760
+}
